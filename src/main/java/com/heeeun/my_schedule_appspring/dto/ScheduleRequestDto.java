@@ -2,7 +2,6 @@ package com.heeeun.my_schedule_appspring.dto;
 
 import lombok.Getter;
 
-import java.util.Date;
 
 @Getter
 public class ScheduleRequestDto {

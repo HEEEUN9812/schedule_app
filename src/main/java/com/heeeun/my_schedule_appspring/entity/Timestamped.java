@@ -14,6 +14,7 @@ public abstract class Timestamped {
 
     @CreatedDate
     @Column(updatable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
+
 }
