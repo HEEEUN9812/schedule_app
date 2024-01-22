@@ -44,7 +44,7 @@ public class ScheduleController {
 
     // 선택 일정 삭제
     @DeleteMapping("/schdl/{id}")
-    public Long deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto){
-        return scheduleService.deleteSchedule(id);
+    public String deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto){
+        return scheduleService.deleteSchedule(id, requestDto);
     }
 }

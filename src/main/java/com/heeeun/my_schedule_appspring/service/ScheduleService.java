@@ -46,27 +46,29 @@ public class ScheduleService {
     @Transactional
     public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) { // 비밀번호 메서드 추가 필요
         Schedule schedule = findSchedule(id);
-//        checkPassword(requestDto,schedule);
-        schedule.update(requestDto);
-        ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule);
-        return scheduleResponseDto;
+
+        if(schedule.getPassword().equals(requestDto.getPassword())){
+            schedule.update(requestDto);
+            return new ScheduleResponseDto(schedule);
+        }else {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
     }
 
     @Transactional
-    public Long deleteSchedule(Long id) { // 비밀번호 메서드 추가 필요
+    public String deleteSchedule(Long id, ScheduleRequestDto requestDto) { // 비밀번호 메서드 추가 필요
         Schedule schedule = findSchedule(id);
-        scheduleRepository.delete(schedule);
-        return id;
+
+        if(schedule.getPassword().equals(requestDto.getPassword())){
+            scheduleRepository.delete(schedule);
+            return "삭제되었습니다.";
+        }else {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
     }
 
     public Schedule findSchedule(Long id){
         return scheduleRepository.findById(id).orElseThrow(()->
                 new IllegalArgumentException("선택한 일정은 존재하지 않습니다."));
     }
-
-//    public ScheduleResponseDto checkPassword(ScheduleRequestDto requestDto, Schedule schedule){
-//        if(schedule.getPassword().equals(requestDto.getPassword())){
-//            return r;
-//        }return new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-//    }
 }
