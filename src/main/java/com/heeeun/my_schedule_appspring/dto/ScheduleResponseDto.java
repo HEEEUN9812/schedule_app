@@ -1,9 +1,10 @@
 package com.heeeun.my_schedule_appspring.dto;
 
 import com.heeeun.my_schedule_appspring.entity.Schedule;
+import lombok.Getter;
 
 import java.util.Date;
-
+@Getter
 public class ScheduleResponseDto {
     private Long id;
     private String title;
@@ -16,6 +17,6 @@ public class ScheduleResponseDto {
         this.title = schedule.getTitle();
         this.content = schedule.getContent();
         this.manager = schedule.getManager();
-        this.date = schedule.getDate();
+//        this.date = schedule.getDate();
     }
 }
