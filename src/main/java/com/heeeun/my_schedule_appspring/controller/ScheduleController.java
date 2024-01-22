@@ -5,6 +5,7 @@ import com.heeeun.my_schedule_appspring.dto.ScheduleRequestDto;
 import com.heeeun.my_schedule_appspring.dto.ScheduleResponseDto;
 import com.heeeun.my_schedule_appspring.entity.Schedule;
 import com.heeeun.my_schedule_appspring.service.ScheduleService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,17 +34,19 @@ public class ScheduleController {
 
     // 선택 일정 조회
     @GetMapping("/schdl/{id}")
-    public Schedule getSelectSchedule(@PathVariable Long id){
+    public ScheduleResponseDto getSelectSchedule(@PathVariable Long id){
         return scheduleService.getSelectSchedule(id);
     }
 
     // 선택 일정 수정
     @PutMapping("/schdl/{id}")
-    public Long update(@PathVariable Long id, @PathVariable String password, @RequestBody ScheduleRequestDto requestDto){
-        return scheduleService.updateSchedule(id, password, requestDto);
+    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto){
+        return scheduleService.updateSchedule(id, requestDto);
     }
 
-
     // 선택 일정 삭제
-
+    @DeleteMapping("/schdl/{id}")
+    public Long deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto){
+        return scheduleService.deleteSchedule(id);
+    }
 }

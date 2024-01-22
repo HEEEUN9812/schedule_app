@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "scheduler")
 @NoArgsConstructor
-public class Schedule {
+public class Schedule extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

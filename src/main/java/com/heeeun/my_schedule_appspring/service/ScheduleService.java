@@ -5,6 +5,7 @@ import com.heeeun.my_schedule_appspring.dto.ScheduleResponseDto;
 import com.heeeun.my_schedule_appspring.entity.Schedule;
 import com.heeeun.my_schedule_appspring.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,9 +31,10 @@ public class ScheduleService {
         return scheduleRepository.findAll().stream().map(ScheduleResponseDto :: new).toList();
     }
 
-    public Schedule getSelectSchedule(Long id) {
+    public ScheduleResponseDto getSelectSchedule(Long id) {
             Schedule schedule = findSchedule(id);
-        return schedule;
+        ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule);
+        return scheduleResponseDto;
 
 //        return scheduleRepository.findAll().stream()
 //                .filter(s->s.getId().equals(id))
@@ -41,9 +43,17 @@ public class ScheduleService {
 //                .orElseThrow(()-> new IllegalArgumentException());
     }
 
-    public Long updateSchedule(Long id, String password, ScheduleRequestDto requestDto) {
+    @Transactional
+    public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) { // 비밀번호 메서드 추가 필요
         Schedule schedule = findSchedule(id);
         schedule.update(requestDto);
+        ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule);
+        return scheduleResponseDto;
+    }
+
+    public Long deleteSchedule(Long id) { // 비밀번호 메서드 추가 필요
+        Schedule schedule = findSchedule(id);
+        scheduleRepository.delete(schedule);
         return id;
     }
 
