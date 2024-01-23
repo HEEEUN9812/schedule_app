@@ -35,40 +35,35 @@ public class ScheduleService {
             Schedule schedule = findSchedule(id);
         ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule);
         return scheduleResponseDto;
-
-//        return scheduleRepository.findAll().stream()
-//                .filter(s->s.getId().equals(id))
-//                .findFirst()
-//                .map(ScheduleResponseDto::new)
-//                .orElseThrow(()-> new IllegalArgumentException());
     }
 
     @Transactional
-    public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) { // 비밀번호 메서드 추가 필요
+    public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
         Schedule schedule = findSchedule(id);
+        confirmPassword(requestDto, schedule);
 
-        if(schedule.getPassword().equals(requestDto.getPassword())){
             schedule.update(requestDto);
             return new ScheduleResponseDto(schedule);
-        }else {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
     }
 
     @Transactional
-    public String deleteSchedule(Long id, ScheduleRequestDto requestDto) { // 비밀번호 메서드 추가 필요
+    public String deleteSchedule(Long id, ScheduleRequestDto requestDto) {
         Schedule schedule = findSchedule(id);
+        confirmPassword(requestDto, schedule);
 
-        if(schedule.getPassword().equals(requestDto.getPassword())){
             scheduleRepository.delete(schedule);
             return "삭제되었습니다.";
-        }else {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
     }
 
     public Schedule findSchedule(Long id){
         return scheduleRepository.findById(id).orElseThrow(()->
                 new IllegalArgumentException("선택한 일정은 존재하지 않습니다."));
+    }
+
+    public void confirmPassword (ScheduleRequestDto requestDto, Schedule schedule){
+        if(schedule.getPassword().equals(requestDto.getPassword())){
+        }else {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
     }
 }
