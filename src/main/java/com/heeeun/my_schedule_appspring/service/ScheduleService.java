@@ -23,10 +23,9 @@ public class ScheduleService {
 
     public ScheduleResponseDto createSchedule (ScheduleRequestDto requestDto){
         Schedule schedule = new Schedule(requestDto);
-        Schedule saveSchedule = scheduleRepository.save(schedule);
+        scheduleRepository.save(schedule);
 
-        ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule);
-        return scheduleResponseDto;
+        return new ScheduleResponseDto(schedule);
     }
 
     public List<ScheduleResponseDto> getSchedule() {
@@ -35,8 +34,8 @@ public class ScheduleService {
 
     public ScheduleResponseDto getSelectSchedule(Long id) {
             Schedule schedule = findSchedule(id);
-        ScheduleResponseDto scheduleResponseDto = new ScheduleResponseDto(schedule);
-        return scheduleResponseDto;
+
+        return new ScheduleResponseDto(schedule);
     }
 
     @Transactional
