@@ -1,6 +1,6 @@
 ### Use Case Diagram
 
-![무제]([https://github.com/HEEEUN9812/schedule_app/assets/154495684/c558b50d-62bf-42aa-adad-3fbb018596cd](https://fog-diadem-677.notion.site/9c9d7d780bbf42ec81bec1bb97084e97?v=c26ee96ed261499eb6a2099eb0995477&pvs=4))
+![무제](https://github.com/HEEEUN9812/schedule_app/assets/154495684/c558b50d-62bf-42aa-adad-3fbb018596cd)
 
 ---
 
