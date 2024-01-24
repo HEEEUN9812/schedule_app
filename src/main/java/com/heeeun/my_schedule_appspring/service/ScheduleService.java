@@ -16,12 +16,12 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
-    public ScheduleService(ScheduleRepository scheduleRepository){
+    public ScheduleService(ScheduleRepository scheduleRepository) {
         this.scheduleRepository = scheduleRepository;
     }
 
 
-    public ScheduleResponseDto createSchedule (ScheduleRequestDto requestDto){
+    public ScheduleResponseDto createSchedule(ScheduleRequestDto requestDto) {
         Schedule schedule = new Schedule(requestDto);
         scheduleRepository.save(schedule);
 
@@ -29,11 +29,11 @@ public class ScheduleService {
     }
 
     public List<ScheduleResponseDto> getSchedule() {
-        return scheduleRepository.findAllByOrderByCreatedAtDesc().stream().map(ScheduleResponseDto :: new).toList();
+        return scheduleRepository.findAllByOrderByCreatedAtDesc().stream().map(ScheduleResponseDto::new).toList();
     }
 
     public ScheduleResponseDto getSelectSchedule(Long id) {
-            Schedule schedule = findSchedule(id);
+        Schedule schedule = findSchedule(id);
 
         return new ScheduleResponseDto(schedule);
     }
@@ -43,8 +43,8 @@ public class ScheduleService {
         Schedule schedule = findSchedule(id);
         confirmPassword(requestDto, schedule);
 
-            schedule.update(requestDto);
-            return new ScheduleResponseDto(schedule);
+        schedule.update(requestDto);
+        return new ScheduleResponseDto(schedule);
     }
 
     @Transactional
@@ -52,19 +52,18 @@ public class ScheduleService {
         Schedule schedule = findSchedule(id);
         confirmPassword(requestDto, schedule);
 
-            scheduleRepository.delete(schedule);
-            return "삭제되었습니다.";
+        scheduleRepository.delete(schedule);
+        return "삭제되었습니다.";
     }
 
-    public Schedule findSchedule(Long id){
-        return scheduleRepository.findById(id).orElseThrow(()->
+    public Schedule findSchedule(Long id) {
+        return scheduleRepository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "선택한 일정이 존재하지 않습니다."));
     }
 
-    public void confirmPassword (ScheduleRequestDto requestDto, Schedule schedule){
-        if(schedule.getPassword().equals(requestDto.getPassword())){
-        }else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"비밀번호가 일치하지 않습니다.");
+    public void confirmPassword(ScheduleRequestDto requestDto, Schedule schedule) {
+        if (!schedule.getPassword().equals(requestDto.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
         }
     }
 }
